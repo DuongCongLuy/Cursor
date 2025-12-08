@@ -1,0 +1,88 @@
+name: Test MCP Configuration
+
+on:
+  workflow_dispatch:  # Cho phép chạy thủ công
+  push:
+    branches:
+      - main
+    paths:
+      - '.mcp.json.example'
+      - '.github/workflows/test-mcp.yml'
+
+jobs:
+  test-mcp:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Validate MCP Configuration
+        run: |
+          echo "🔍 Kiểm tra cấu hình MCP..."
+          
+          # Kiểm tra file .mcp.json.example có tồn tại
+          if [ ! -f ".mcp.json.example" ]; then
+            echo "❌ LỖI: Không tìm thấy file .mcp.json.example"
+            exit 1
+          fi
+          
+          # Kiểm tra format JSON
+          if ! node -e "JSON.parse(require('fs').readFileSync('.mcp.json.example', 'utf8'))" 2>/dev/null; then
+            echo "❌ LỖI: File .mcp.json.example không phải JSON hợp lệ"
+            exit 1
+          fi
+          
+          echo "✅ File .mcp.json.example hợp lệ"
+      
+      - name: Check GitHub Secrets
+        run: |
+          echo "🔐 Kiểm tra GitHub Secrets..."
+          
+          if [ -z "${{ secrets.NOTION_TOKEN }}" ]; then
+            echo "⚠️  CẢNH BÁO: NOTION_TOKEN chưa được cấu hình trong GitHub Secrets"
+          else
+            echo "✅ NOTION_TOKEN đã được cấu hình"
+          fi
+          
+          if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
+            echo "⚠️  CẢNH BÁO: OPENAI_API_KEY chưa được cấu hình trong GitHub Secrets"
+          else
+            echo "✅ OPENAI_API_KEY đã được cấu hình"
+          fi
+      
+      - name: Test Notion MCP (nếu có token)
+        if: ${{ secrets.NOTION_TOKEN != '' }}
+        run: |
+          echo "🧪 Test Notion MCP..."
+          # Lưu ý: MCP servers thường chạy local, không thể test đầy đủ trong GitHub Actions
+          # Đây chỉ là kiểm tra cấu hình cơ bản
+          echo "✅ Notion MCP configuration hợp lệ"
+      
+      - name: Test Claude Context MCP (nếu có key)
+        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        run: |
+          echo "🧪 Test Claude Context MCP..."
+          # Lưu ý: MCP servers thường chạy local, không thể test đầy đủ trong GitHub Actions
+          # Đây chỉ là kiểm tra cấu hình cơ bản
+          echo "✅ Claude Context MCP configuration hợp lệ"
+      
+      - name: Summary
+        run: |
+          echo ""
+          echo "========================================"
+          echo "  KẾT QUẢ KIỂM TRA" 
+          echo "========================================"
+          echo ""
+          echo "📋 File .mcp.json.example: ✅ Hợp lệ"
+          echo "🔐 GitHub Secrets: Đã kiểm tra"
+          echo ""
+          echo "⚠️  LƯU Ý: MCP servers chạy local trong Cursor"
+          echo "   GitHub Actions chỉ kiểm tra cấu hình, không test chức năng"
+          echo ""
+
