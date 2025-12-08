@@ -99,7 +99,9 @@ if ($Direction -eq "cursor-to-claude" -or $Direction -eq "both") {
 }
 
 # Dong bo tu Claude Code sang Cursor
-if ($Direction -eq "claude-to-cursor" -or $Direction -eq "both") {
+# NOTE: "both" direction KHONG bao gom claude-to-cursor de bao ve Source of Truth
+# NOTE: "both" direction does NOT include claude-to-cursor to protect Source of Truth
+if ($Direction -eq "claude-to-cursor") {
     Write-Host "Dong bo tu Claude Code -> Cursor..." -ForegroundColor Cyan
     Write-Host ""
     
@@ -126,6 +128,7 @@ Write-Host ""
 Write-Host "Dong bo tu Claude Code -> Cursor:" -ForegroundColor White
 Write-Host "  .\sync-mcp.ps1 -Direction claude-to-cursor" -ForegroundColor Gray
 Write-Host ""
-Write-Host "Dong bo 2 chieu (kiem tra + dong bo):" -ForegroundColor White
+Write-Host "Dong bo tu Source of Truth (kiem tra + dong bo tu Cursor):" -ForegroundColor White
 Write-Host "  .\sync-mcp.ps1 -Direction both" -ForegroundColor Gray
+Write-Host "  (Luu y: 'both' chi dong bo tu Cursor -> Claude Code, khong ghi de Source of Truth)" -ForegroundColor Yellow
 Write-Host ""

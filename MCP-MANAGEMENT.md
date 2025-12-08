@@ -94,6 +94,8 @@ Sử dụng khi:
 
 ### Cách 3: Đồng bộ từ Claude Code → Cursor
 
+⚠️ **CẢNH BÁO:** Chỉ sử dụng khi thực sự cần thiết!
+
 ```cmd
 sync-mcp.bat claude-to-cursor
 ```
@@ -103,11 +105,16 @@ Hoặc:
 .\sync-mcp.ps1 -Direction claude-to-cursor
 ```
 
-Sử dụng khi:
-- Bạn đã chỉnh sửa config trong Claude Code
-- Muốn đồng bộ ngược lại về Cursor
+**Lưu ý quan trọng:**
+- Lệnh này sẽ **ghi đè** file `.mcp.json` trong Cursor workspace (Source of Truth)
+- Chỉ sử dụng khi bạn đã chỉnh sửa config trong Claude Code và muốn áp dụng ngược lại
+- **Khuyến nghị:** Thay vì dùng lệnh này, nên chỉnh sửa `.mcp.json` trong Cursor và đồng bộ xuống
 
-### Cách 4: Đồng bộ 2 chiều (kiểm tra + đồng bộ)
+Sử dụng khi:
+- Bạn đã chỉnh sửa config trong Claude Code và muốn áp dụng ngược lại về Cursor
+- **Cẩn thận:** Có thể mất dữ liệu nếu file Cursor đã được cập nhật
+
+### Cách 4: Đồng bộ từ Source of Truth (kiểm tra + đồng bộ)
 
 ```cmd
 sync-mcp.bat both
@@ -118,8 +125,14 @@ Hoặc:
 .\sync-mcp.ps1 -Direction both
 ```
 
+**Lưu ý quan trọng:** 
+- `both` chỉ thực hiện: **Kiểm tra** + **Đồng bộ từ Cursor → Claude Code**
+- **KHÔNG** đồng bộ ngược lại (Claude Code → Cursor) để bảo vệ Source of Truth
+- Nếu cần đồng bộ ngược, dùng `claude-to-cursor` riêng (cẩn thận!)
+
 Sử dụng khi:
-- Muốn kiểm tra và đồng bộ tất cả
+- Muốn kiểm tra trạng thái và đồng bộ từ Source of Truth
+- Đảm bảo tất cả config đều đồng bộ từ `.mcp.json` trong Cursor workspace
 
 ---
 
