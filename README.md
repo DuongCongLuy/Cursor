@@ -51,10 +51,18 @@ Repository sử dụng 2 GitHub Secrets:
 ```
 .
 ├── .mcp.json.example      # Template cấu hình MCP (không chứa secrets)
-├── .mcp.json              # File cấu hình thực tế (bị gitignore)
+├── .mcp.json              # File cấu hình thực tế (bị gitignore) ⭐ Source of Truth
+├── sync-mcp.ps1           # Script đồng bộ MCP giữa Cursor và Claude Code
 ├── setup-mcp.ps1          # Script tự động setup
 ├── SETUP.md               # Hướng dẫn chi tiết
+├── MCP-MANAGEMENT.md      # Hướng dẫn quản lý và đồng bộ MCP
+├── QUICK-START.md         # Hướng dẫn nhanh
 ├── CLAUDE.md              # System Builder Instructions
+├── claude-code/           # Folder cấu hình cho Claude Code
+│   ├── .mcp.json          # Backup config (bị gitignore)
+│   ├── README.md          # Hướng dẫn Claude Code
+│   ├── QUICK-START.md     # Hướng dẫn nhanh
+│   └── setup-claude-mcp.ps1
 └── .github/
     └── workflows/
         └── test-mcp.yml   # GitHub Actions workflow kiểm tra cấu hình
@@ -66,9 +74,25 @@ Sau khi setup, test trong Cursor chat:
 - `Test Notion MCP: Hãy liệt kê các teams trong Notion workspace`
 - `Test Claude Context: Hãy đọc knowledge graph hiện tại`
 
+## 🔄 Đồng Bộ MCP Config
+
+Sử dụng script để đồng bộ config giữa Cursor và Claude Code:
+
+```powershell
+# Kiểm tra trạng thái
+.\sync-mcp.ps1 -Direction check
+
+# Đồng bộ từ Cursor → Claude Code
+.\sync-mcp.ps1 -Direction cursor-to-claude
+```
+
+📚 **Xem [MCP-MANAGEMENT.md](MCP-MANAGEMENT.md) để biết chi tiết về quản lý và đồng bộ.**
+
 ## 📚 Tài Liệu Tham Khảo
 
+- [MCP-MANAGEMENT.md](MCP-MANAGEMENT.md) - Quản lý và đồng bộ MCP config
 - [SETUP.md](SETUP.md) - Hướng dẫn setup chi tiết
+- [QUICK-START.md](QUICK-START.md) - Hướng dẫn nhanh
 - [CLAUDE.md](CLAUDE.md) - System Builder Instructions
 - [Notion MCP Server](https://github.com/notionhq/notion-mcp-server)
 - [Claude Context MCP](https://github.com/zilliztech/claude-context-mcp)
