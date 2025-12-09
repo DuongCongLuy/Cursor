@@ -1,0 +1,37 @@
+{
+  "name": "Claude Code MCP Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup-mcp.sh",
+
+  "secrets": {
+    "NOTION_TOKEN": {
+      "description": "Notion Integration Token (starts with ntn_)"
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API Key (starts with sk-)"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropics.claude-code"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "remoteEnv": {
+    "NOTION_TOKEN": "${secrets.NOTION_TOKEN}",
+    "OPENAI_API_KEY": "${secrets.OPENAI_API_KEY}"
+  }
+}
