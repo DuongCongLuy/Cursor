@@ -8,10 +8,20 @@ Repository này chứa:
 - Cấu hình mẫu cho 2 MCP servers: **Notion MCP** và **Claude Context MCP**
 - Script tự động setup MCP từ GitHub Secrets
 - GitHub Actions workflow để kiểm tra cấu hình
+- Hướng dẫn kết nối **Docker MCP Toolkit** với các AI clients
 
 ## 🚀 Bắt Đầu (Getting Started)
 
-### Cách 1: Sử dụng Script Tự Động (Recommended)
+### Cách 1: Docker MCP Toolkit (Recommended - GUI)
+
+Sử dụng Docker Desktop với MCP Toolkit extension:
+1. Cài đặt **Docker Desktop 4.42+**
+2. Vào **Extensions** → **MCP Toolkit**
+3. Kích hoạt MCP servers và kết nối clients
+
+📚 **Xem hướng dẫn chi tiết trong [DOCKER-MCP-TOOLKIT.md](DOCKER-MCP-TOOLKIT.md)**
+
+### Cách 2: Sử dụng Script Tự Động
 
 ```powershell
 # Chạy script setup
@@ -23,7 +33,7 @@ Script sẽ:
 - Hướng dẫn nhập tokens/API keys
 - Tự động cập nhật cấu hình
 
-### Cách 2: Setup Thủ Công
+### Cách 3: Setup Thủ Công
 
 1. Copy file mẫu:
    ```bash
@@ -90,13 +100,15 @@ Sử dụng script để đồng bộ config giữa Cursor và Claude Code:
 
 ## 📚 Tài Liệu Tham Khảo
 
+- [DOCKER-MCP-TOOLKIT.md](DOCKER-MCP-TOOLKIT.md) - **Hướng dẫn Docker MCP Toolkit (GUI)**
 - [MCP-MANAGEMENT.md](MCP-MANAGEMENT.md) - Quản lý và đồng bộ MCP config
 - [SETUP.md](SETUP.md) - Hướng dẫn setup chi tiết
 - [QUICK-START.md](QUICK-START.md) - Hướng dẫn nhanh
 - [CLAUDE.md](CLAUDE.md) - System Builder Instructions
+- [Docker MCP Toolkit Docs](https://docs.docker.com/desktop/extensions/mcp-toolkit/) - Tài liệu chính thức
 - [Notion MCP Server](https://github.com/notionhq/notion-mcp-server)
 - [Claude Context MCP](https://github.com/zilliztech/claude-context-mcp)
 
 ---
 
-*Cập nhật: 08/12/2025*
+*Cập nhật: 14/12/2025*
